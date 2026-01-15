@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FOLOBO | Multi-service Firm</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Limelight&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f8f6f3;
+      --text: #111111;
+      --gray: #555555;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+
+    /* 固定顶部导航栏 */
+    .main-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--bg);
+      z-index: 1000;
+      padding: 1.8rem 5vw;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    .nav-logo {
+      flex-shrink: 0;
+    }
+
+    .nav-logo .home-logo {
+      font-family: 'Limelight', cursive;
+      font-size: clamp(2.8rem, 8vw, 5.2rem);
+      font-weight: normal;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .nav-links-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4.5rem;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: var(--gray);
+    }
+
+    #home {
+      padding-top: 14rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--gray);
+      font-weight: 300;
+      margin-bottom: 2rem;          /* 减小与打字机之间的间距，手机端更友好 */
+      line-height: 1.4;
+      padding: 0 1rem;              /* 增加左右内边距防止文字贴边 */
+      max-width: 90vw;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* 首页打字机效果 */
+    .typewriter-container {
+      text-align: center;
+      margin: 1.5rem 0 3rem;        /* 手机端缩小垂直间距 */
+    }
+
+    #typewriter {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 10rem);
+      font-weight: 900;
+      line-height: 1.1;
+      display: inline-block;
+      border-right: 0.08em solid rgba(0,0,0,0.3); /* 微弱光标 */
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blink-caret 0.75s step-end infinite;
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: rgba(0,0,0,0.3); }
+    }
+
+    /* Contact us 标题 - 静态大标题，不滚动 */
+    .contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(5rem, 12vw, 14rem);
+      font-weight: 900;
+      line-height: 0.9;
+      text-align: center;
+      margin: 2rem 0 3rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 4rem 0;
+    }
+
+    .btn {
+      padding: 1.1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 2px solid var(--text);
+      color: var(--text);
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--text);
+      color: white;
+    }
+
+    .btn-black {
+      background: var(--text);
+      color: white;
+    }
+
+    .btn-black:hover {
+      background: transparent;
+      color: var(--text);
+    }
+
+    section {
+      padding: 8rem 0;
+      min-height: 100vh;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 5rem 3rem;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      text-align: center;
+    }
+
+    .service-card .image-wrapper {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 16px;
+      margin-bottom: 1.8rem;
+      border: 1px solid #ddd;
+    }
+
+    .service-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.4rem;
+      font-weight: 800;
+      margin: 1rem 0;
+    }
+
+    .service-subtitle {
+      font-size: 1.3rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 1.35rem;
+      color: var(--gray);
+      text-align: center;
+    }
+
+    .contact-section {
+      background: var(--text);
+      color: white;
+      text-align: center;
+    }
+
+    .contact-email {
+      font-size: 1.9rem;
+      margin: 4rem auto;
+      display: inline-block;
+    }
+
+    .contact-email a {
+      color: #a5d8ff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-email a:hover {
+      color: #4dabf7;
+      text-decoration: none !important;
+    }
+
+    .socials {
+      font-size: 3rem;
+      margin: 4rem 0;
+    }
+
+    .socials a {
+      color: white;
+      margin: 0 1.5rem;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 0;
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .nav-links-wrapper {
+        order: 2;
+      }
+      
+      .nav-links {
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+      }
+      
+      .nav-logo .home-logo {
+        font-size: 3.5rem;
+      }
+      
+      #home {
+        padding-top: 12rem;           /* 保持足够空间给固定导航 */
+        padding-bottom: 4rem;
+      }
+      
+      #typewriter {
+        font-size: clamp(2.8rem, 8vw, 6rem);
+      }
+
+      /* 进一步优化 tagline 在小屏幕的表现 */
+      .tagline {
+        font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+        margin-bottom: 1.5rem;
+        padding: 0 2rem;
+      }
+
+      .typewriter-container {
+        margin: 1rem 0 2.5rem;
+      }
+
+      .buttons {
+        margin: 2.5rem 0;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #home {
+        padding-top: 11rem;
+      }
+
+      .tagline {
+        padding: 0 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="main-nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="home-logo">FOLOBO</div>
+      </div>
+
+      <div class="nav-links-wrapper">
+        <div class="nav-links">
+          <a href="#home">HomePage</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home">
+    <div class="container">
+      <div class="tagline">Multi-service firm built on innovation and professionalism</div>
+
+      <div class="typewriter-container">
+        <span id="typewriter"></span>
+      </div>
+
+      <div class="buttons">
+        <a href="#services" class="btn btn-black">What we can do</a>
+        <a href="#contact" class="btn">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="image-wrapper">
+            <img src="FOLOBO Studio.jpg" alt="Customized Tourism">
+          </div>
+          <div class="service-title">FOLOBO<br>Studio</div>
+          <div class="service-subtitle">Customised tourism and<br> client-oriented services</div>
+          <a href="#contact" class="btn">Call for more</a>
+        </div>
+
+        <div class="service-card">
+          <div class="image-wrapper">
+            <img src="trade.jpg" alt="Warehouse">
+          </div>
+          <div class="service-title">FOLOBO<br>Trade</div>
+          <div class="service-subtitle">International Trade and<br> Supply Chain Solutions</div>
+          <a href="#contact" class="btn">Call for more</a>
+        </div>
+
+        <div class="service-card">
+          <div class="image-wrapper">
+            <img src="consultation.jpg" alt="Business Meeting">
+          </div>
+          <div class="service-title">FOLOBO<br>Consultancy</div>
+          <div class="service-subtitle">Consultancy and<br> Translation Services</div>
+          <a href="#contact" class="btn">Call for more</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h1 class="contact-title">Contact us</h1>
+
+      <p style="font-size:2rem; margin:3rem 0; opacity:0.9;">
+        Come and tell us what you need!
+      </p>
+
+      <div class="contact-email">
+        Email: <a href="mailto:folobostudio@gmail.com">folobostudio@gmail.com</a>
+      </div>
+
+      <div class="socials">
+        <a href="https://x.com/folobostudio?s=21" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://www.instagram.com/folobostudio?igsh=NmhrbjB4bnB2aTM5&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@fobolostudio" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a href="https://www.facebook.com/profile.php?id=61586139796692" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://www.youtube.com/@folobostudio" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2>About us</h2>
+      <div class="about-text">
+        <p style="margin-bottom:1.5rem;">FOLOBO focus on CUSTOMIZED and Client-oriented.</p>
+        <p>We are a multi-service firm <br>built on innovation and professionalism, <br>delivering high-quality, reliable solutions <br>that create real value for our clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Copyright © 2026 FOLOBO. All rights reserved.
+  </footer>
+
+  <script>
+    const sentences = [
+      "Client-oriented",
+      "Client-oriented"
+    ];
+    let sentenceIndex = 0;
+    let charIndex = 0;
+    let isTyping = true;
+    const typewriterElement = document.getElementById('typewriter');
+    const typingSpeed = 100;
+    const pauseDuration = 3000;
+
+    function typeWriter() {
+      if (isTyping) {
+        if (charIndex < sentences[sentenceIndex].length) {
+          typewriterElement.textContent += sentences[sentenceIndex].charAt(charIndex);
+          charIndex++;
+          setTimeout(typeWriter, typingSpeed);
+        } else {
+          isTyping = false;
+          setTimeout(typeWriter, pauseDuration);
+        }
+      } else {
+        typewriterElement.textContent = '';
+        charIndex = 0;
+        sentenceIndex = (sentenceIndex + 1) % sentences.length;
+        isTyping = true;
+        setTimeout(typeWriter, 0);
+      }
+    }
+
+    typeWriter();
+  </script>
+
+</body>
+</html>
